@@ -52,9 +52,27 @@
 /* ... (previous styles remain the same) */
 
 .history-container {
-    width: 400px;
-    margin: 20px auto;
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
+
+.history-container.show {
+    display: block;
+}
+
+.history-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 
 .history-container h2 {
     text-align: center;

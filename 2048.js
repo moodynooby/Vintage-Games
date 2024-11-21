@@ -73,24 +73,6 @@ function updateScore() {
     highScoreElement.textContent = `High Score: ${highScore}`;
 }
 
-// Function to update game history
-function updateGameHistory() {
-    gameHistory.unshift({ score: score, date: new Date().toLocaleString() });
-    if (gameHistory.length > 10) gameHistory.pop();
-    setCookie('gameHistory', JSON.stringify(gameHistory), 365);
-    renderGameHistory();
-}
-
-// Function to render game history
-function renderGameHistory() {
-    const historyList = document.getElementById('history-list');
-    historyList.innerHTML = '';
-    gameHistory.forEach(game => {
-        const li = document.createElement('li');
-        li.textContent = `Score: ${game.score} - Date: ${game.date}`;
-        historyList.appendChild(li);
-    });
-}
 
 // Function to handle user input (arrow keys)
 function handleInput(direction) {
@@ -178,19 +160,9 @@ newGameButton.addEventListener('click', () => {
     renderBoard();
 });
 
-// History button functionality
-showHistory.addEventListener('click', () => {
-    grid.innerHTML() = '  <div class="history-container">\n' +
-    '            <h2>Game History</h2>\n' +
-    '            <ul id="history-list"></ul>\n' +
-    '        </div>\n' +
-    '    </div>\n' +
-    '    <div class="history-container , list-group " >  123' ;
 
-});
 
 // Initialize the game
 generateTile();
 generateTile();
 renderBoard();
-renderGameHistory();
