@@ -11,6 +11,12 @@ let score = 0;
 let highScore = parseInt(getCookie('highScore')) || 0;
 let gameHistory = JSON.parse(getCookie('gameHistory')) || [];
 
+// Touch handling variables
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 // Function to set a cookie
 function setCookie(name, value, days) {
     const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
@@ -73,8 +79,7 @@ function updateScore() {
     highScoreElement.textContent = `High Score: ${highScore}`;
 }
 
-
-// Function to handle user input (arrow keys)
+// Function to handle user input (arrow keys and swipes)
 function handleInput(direction) {
     let moved = false;
     const newBoard = JSON.parse(JSON.stringify(board));
@@ -140,7 +145,55 @@ function isGameOver() {
     return true;
 }
 
-// Event listeners for arrow keys
+// Function to handle touch events
+function handleTouch(e) {
+    if (!e.target.closest('.grid')) return;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const minSwipeDistance = 30; // Minimum distance for a swipe
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (Math.abs(deltaX) > minSwipeDistance) {
+            if (deltaX > 0) {
+                handleInput('right');
+            } else {
+                handleInput('left');
+            }
+        }
+    } else {
+        // Vertical swipe
+        if (Math.abs(deltaY) > minSwipeDistance) {
+            if (deltaY > 0) {
+                handleInput('down');
+            } else {
+                handleInput('up');
+            }
+        }
+    }
+
+    // Prevent scrolling when swiping
+    e.preventDefault();
+}
+
+// Touch event listeners
+grid.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: false });
+
+grid.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevent scrolling while touching the game
+}, { passive: false });
+
+grid.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    handleTouch(e);
+}, { passive: false });
+
+// Keyboard event listeners
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp') handleInput('up');
     if (event.key === 'ArrowDown') handleInput('down');
@@ -160,9 +213,15 @@ newGameButton.addEventListener('click', () => {
     renderBoard();
 });
 
-
-
 // Initialize the game
 generateTile();
 generateTile();
 renderBoard();
+
+// Add viewport meta tag for proper mobile scaling
+if (!document.querySelector('meta[name="viewport"]')) {
+    const viewport = document.createElement('meta');
+    viewport.name = 'viewport';
+    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    document.head.appendChild(viewport);
+}
