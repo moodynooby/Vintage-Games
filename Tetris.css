@@ -59,3 +59,42 @@ html, body {
     top: 0;
     left: 0;
 }
+/* Media query for smaller screens, typically mobile devices */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    #content-box {
+        padding: 1rem; /* Reduce padding */
+    }
+
+    .col-4 {
+        padding: 0; /* Remove padding from columns */
+    }
+
+    #info-container {
+        padding-top: 1rem; /* Reduce top padding */
+        margin-top: 1rem; /* Add top margin */
+    }
+
+
+    #next-shape-box {
+        position: relative; /* Change positioning to avoid overlap */
+        margin-bottom: 1rem; /* Add bottom margin */
+    }
+
+    #playground {
+        margin: 0 auto; /* Center the playground */
+    }
+
+    #start-btn, #reset-btn {
+        font-size: 1rem; /* Reduce button font size */
+        padding: 0.5rem 1rem; /* Reduce button padding */
+        margin-bottom: 0.5rem;
+    }
+
+    #info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Horizontally center the elements*/
+    }
+
+
+}

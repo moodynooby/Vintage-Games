@@ -164,34 +164,6 @@ function showNextShape() {
     }
 }
 
-function deleteCompleteLines(startRow, length) {
-    var lines = 0;
-    for(var row = startRow ; row < startRow + length ; ++row) {
-        if(MAP[row].every(v => v === 1)) {
-            ++lines;
-            MAP.splice(row, 1);
-            MAP.unshift(Array(COLS).fill(0));
-        }
-    }
-    for(var row = 0 ; row < ROWS ; ++row) {
-        for(var col = 0 ; col < COLS ; ++col) {
-            ELEMENTS[row][col].className = MAP[row][col] > 0 ? "full" : "empty";
-        }
-    }
-    addScore(lines);
-}
-
-function getTopRowId() {
-    var rowId = -1;
-    for(var i = 0 ; i < ROWS ; ++i) {
-        if(MAP[i].includes(1)) {
-            rowId = i;
-            break;
-        }
-    }
-    return rowId;
-}
-
 
 // Handle key events
 window.onkeydown = (e) => {
@@ -221,6 +193,30 @@ window.onload = () => {
     scoreDisplay = document.getElementById("score");
     gameOverOverlay = document.getElementById("game-over-message");
     nextShapeDisplay = document.getElementById("next-shape");
+    //Touch event listeners for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    playground.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    playground.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+
+        const deltaX = touchEndX - touchStartX;
+
+        if (Math.abs(deltaX) > 30) { // Adjust threshold as needed
+            if (deltaX > 0) {
+                fallingShape.move(1); // Swipe right
+            } else {
+                fallingShape.move(-1); // Swipe left
+            }
+        } else {
+            fallingShape.rotate();// Tap to rotate
+        }
+    });
+
 
     startButton.addEventListener("click", (e) => {
         // Create objects
