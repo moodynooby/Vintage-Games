@@ -1,30 +1,35 @@
 // Constants
-const ROWS = 20;
-const COLS = 10;
-const MAP = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
-const ELEMENTS = Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => document.createElement("div")));
+const ROWS = 20, COLS = 10;
+const MAP = [...Array(ROWS)].map(_ => Array(COLS).fill(0));
+const ELEMENTS = [...Array(ROWS)].map(_ => [...Array(COLS)].map(_ => document.createElement("DIV")));
 const PATTERNS = [
-    [[1, 1, 1], [0, 0, 1]],
-    [[0, 1, 0], [1, 1, 1]],
-    [[0, 1, 1], [1, 1, 0]],
-    [[1, 1], [1, 1]],
-    [[1, 1, 0], [0, 1, 1]],
+    [[1, 1, 1],
+        [0, 0, 1]],
+    [[0, 1, 0],
+        [1, 1, 1]],
+    [[0, 1, 1],
+        [1, 1, 0]],
+    [[1, 1],
+        [1, 1]],
+    [[1, 1, 0],
+        [0, 1, 1]],
     [[1, 1, 1, 1]],
-    [[1, 1, 1], [1, 0, 0]]
+    [[1, 1, 1],
+        [1, 0, 0]]
 ];
 
 // Tetris shapes' class
 class Shape {
     constructor() {
-        this.pattern = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
+        this.pattern = PATTERNS[Math.floor(Math.random() * 100) % PATTERNS.length];
         this.row = 0;
         this.col = Math.floor(COLS / 2 - this.pattern[0].length / 2);
     }
 
     canDraw() {
-        for (let i = 0; i < this.pattern.length; ++i) {
-            for (let j = 0; j < this.pattern[i].length; ++j) {
-                if (this.pattern[i][j] && (this.row + i < 0 || this.row + i >= ROWS || this.col + j < 0 || this.col + j >= COLS || MAP[this.row + i][this.col + j])) {
+        for(var i = 0 ; i < this.pattern.length ; ++i) {
+            for(var j = 0 ; j < this.pattern[0].length ; ++j) {
+                if(this.pattern[i][j] > 0 && MAP[this.row+i][this.col+j] > 0) {
                     return false;
                 }
             }
@@ -33,79 +38,105 @@ class Shape {
     }
 
     draw() {
-        if (!this.canDraw()) {
+        if(getTopRowId() == 0 || !this.canDraw()) {
             gameOver();
             return;
         }
-
-        for (let i = 0; i < this.pattern.length; ++i) {
-            for (let j = 0; j < this.pattern[i].length; ++j) {
-                if (this.pattern[i][j]) {
-                    ELEMENTS[this.row + i][this.col + j].className = "full";
+        for(var i = 0 ; i < this.pattern.length ; ++i){
+            for(var j = 0 ; j < this.pattern[0].length ; ++j){
+                if(this.pattern[i][j] > 0) {
+                    ELEMENTS[this.row+i][this.col+j].className = "full";
                 }
             }
         }
     }
 
     clear() {
-        for (let i = 0; i < this.pattern.length; ++i) {
-            for (let j = 0; j < this.pattern[i].length; ++j) {
-                if (this.pattern[i][j] && this.row + i >= 0 && this.row + i < ROWS && this.col + j >= 0 && this.col + j < COLS) {
-                    ELEMENTS[this.row + i][this.col + j].className = "empty";
+        for(var i = 0 ; i < this.pattern.length ; ++i){
+            for(var j = 0 ; j < this.pattern[0].length ; ++j){
+                if(this.pattern[i][j] > 0) {
+                    ELEMENTS[this.row+i][this.col+j].className = "empty";
                 }
             }
         }
     }
 
     fall() {
-        this.clear();
-        this.row++;
-        if (!this.canDraw()) {
-            this.row--;
-            this.draw();
+        if(this.row + this.pattern.length === ROWS) {
             return false;
         }
+        for(var i = 0 ; i < this.pattern.length ; ++i) {
+            for(var j = 0 ; j < this.pattern[0].length ; ++j) {
+                if(this.pattern[i][j] > 0 && MAP[this.row+i+1][this.col+j] > 0) {
+                    return false;
+                }
+            }
+        }
+        this.clear();
+        ++this.row;
         this.draw();
         return true;
     }
 
-
     rotate() {
-        const rotated = this.pattern[0].map((_, idx) => this.pattern.map(row => row[idx]).reverse());
-        this.clear();
-        const prevPattern = this.pattern;
-        this.pattern = rotated;
-        if (!this.canDraw()) {
-            this.pattern = prevPattern;
+        var rotated = this.pattern[0].map((_, idx) => this.pattern.map(row => row[idx]).reverse());
+        if(this.col + rotated[0].length > COLS || this.row + rotated.length > ROWS) {
+            return;
         }
+        for(var i = 0 ; i < rotated.length ; ++i) {
+            for(var j = 0 ; j < rotated[0].length ; ++j) {
+                if(rotated[i][j] > 0 && MAP[this.row+i][this.col+j] > 0) {
+                    return;
+                }
+            }
+        }
+        this.clear();
+        this.pattern = rotated;
         this.draw();
     }
 
-    move(delta) {
-        this.clear();
-        this.col += delta;
-        if (!this.canDraw()) {
-            this.col -= delta;
+    moveRight() {
+        for(var i = 0 ; i < this.pattern.length ; ++i) {
+            for(var j = 0 ; j < this.pattern[0].length ; ++j) {
+                if(this.pattern[i][j] > 0 && MAP[this.row+i][this.col+j+1] > 0) {
+                    return;
+                }
+            }
         }
-        this.draw();
+        if(this.col + this.pattern[0].length < COLS) {
+            this.clear();
+            ++this.col;
+            this.draw();
+        }
+    }
+
+    moveLeft() {
+        for(var i = 0 ; i < this.pattern.length ; ++i) {
+            for(var j = 0 ; j < this.pattern[0].length ; ++j) {
+                if(this.pattern[i][j] > 0 && MAP[this.row+i][this.col+j-1] > 0) {
+                    return;
+                }
+            }
+        }
+        if(this.col > 0) {
+            this.clear();
+            --this.col;
+            this.draw();
+        }
     }
 
     saveToMap() {
-        for (let i = 0; i < this.pattern.length; ++i) {
-            for (let j = 0; j < this.pattern[i].length; ++j) {
-                if (this.pattern[i][j] && this.row + i >= 0 && this.row + i < ROWS && this.col + j >= 0 && this.col + j < COLS) {
-                    MAP[this.row + i][this.col + j] = 1;
+        for(var i = 0 ; i < this.pattern.length ; ++i) {
+            for(var j = 0 ; j < this.pattern[0].length ; ++j) {
+                if(this.pattern[i][j] > 0) {
+                    MAP[this.row+i][this.col+j] = this.pattern[i][j];
                 }
             }
         }
     }
 }
 
-
-// ... (rest of the code - game logic, initialization, event handlers)
-
-// ... (rest of the code - game logic, initialization, event handlers)
-// The rest of the code (gameLoop, gameOver, showNextShape, deleteCompleteLines, getTopRowId, event handlers, and window.onload) remains largely the same, with minor adjustments to accommodate the changes in the Shape class.  Ensure you use `let` and `const` for variable declarations and handle potential out-of-bounds array accesses after rotations and movements. Be mindful to use  `this.pattern[i].length` in inner loops now, as rotated shapes may have different inner array lengths.// HTML elements
+// HTML elements
 var playground, startButton, resetButton, scoreDisplay, gameOverOverlay, nextShapeDisplay;
 // Objects and variables
 var fallingShape;
@@ -164,19 +195,46 @@ function showNextShape() {
     }
 }
 
+function deleteCompleteLines(startRow, length) {
+    var lines = 0;
+    for(var row = startRow ; row < startRow + length ; ++row) {
+        if(MAP[row].every(v => v === 1)) {
+            ++lines;
+            MAP.splice(row, 1);
+            MAP.unshift(Array(COLS).fill(0));
+        }
+    }
+    for(var row = 0 ; row < ROWS ; ++row) {
+        for(var col = 0 ; col < COLS ; ++col) {
+            ELEMENTS[row][col].className = MAP[row][col] > 0 ? "full" : "empty";
+        }
+    }
+    addScore(lines);
+}
+
+function getTopRowId() {
+    var rowId = -1;
+    for(var i = 0 ; i < ROWS ; ++i) {
+        if(MAP[i].includes(1)) {
+            rowId = i;
+            break;
+        }
+    }
+    return rowId;
+}
 
 // Handle key events
 window.onkeydown = (e) => {
-    if (!gameIsRunning) return;
-    switch (e.key) {
+    if(!gameIsRunning) return;
+    switch(e.key) {
         case "ArrowUp":
             fallingShape.rotate();
             break;
         case "ArrowLeft":
-            fallingShape.move(-1); // Move left
+            fallingShape.moveLeft();
             break;
         case "ArrowRight":
-            fallingShape.move(1); // Move right
+            fallingShape.moveRight();
             break;
         case "ArrowDown":
             fallingShape.fall();
@@ -184,7 +242,7 @@ window.onkeydown = (e) => {
         default:
             break;
     }
-};
+}
 
 window.onload = () => {
     playground = document.getElementById("playground");
@@ -193,30 +251,6 @@ window.onload = () => {
     scoreDisplay = document.getElementById("score");
     gameOverOverlay = document.getElementById("game-over-message");
     nextShapeDisplay = document.getElementById("next-shape");
-    //Touch event listeners for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    playground.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    playground.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-
-        const deltaX = touchEndX - touchStartX;
-
-        if (Math.abs(deltaX) > 30) { // Adjust threshold as needed
-            if (deltaX > 0) {
-                fallingShape.move(1); // Swipe right
-            } else {
-                fallingShape.move(-1); // Swipe left
-            }
-        } else {
-            fallingShape.rotate();// Tap to rotate
-        }
-    });
-
 
     startButton.addEventListener("click", (e) => {
         // Create objects
