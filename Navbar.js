@@ -3,7 +3,7 @@ function createNavbar() {
     const pages = [
         { name: 'Home', url: 'Index.html' },
         { name: '2048', url: '2048.html' },
-        { name: 'Tetris', url: 'Tetris.html' },
+        { name: 'Object Namer', url: 'Object.html' },
         // Add other pages here
     ];
 
