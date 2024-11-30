@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Random Map Quiz</title>
+    <title>Random States Of India Quiz</title>
     <style>
         .container {
             text-align: center;
@@ -53,11 +53,13 @@
 <div id="navbar-container"></div>
 <script src="navbar.js"></script>
 <div class="container mt-2">
-    <h1 class="md-5">Map Generator</h1>
+    <h1 class="md-5">Random States Of India Quiz</h1>
     <div class="input-group ">
-        <input type="text" id="mapInput" placeholder="Enter map name">
+        <span class="input-group-text">With textarea</span>
+        <textarea class="form-control" aria-label="State-Name" id="mapInput" placeholder="Note-Please select exact name from list below"></textarea>
         <button onclick="checkAndLoadMap()" type="button" class="btn">Enter</button>
         <button onclick="getRandomImage()" type="button" class="btn">Get Random Map</button>
+
 
     </div>
     <div id="mapList"></div>
@@ -80,7 +82,12 @@
         'Maps/rajasthan.jpg',
         'Maps/Punjab.jpg',
         'Maps/TamilNadu.jpg',
-        'Maps/Tripura.jpg'
+        'Maps/Tripura.jpg',
+       'Maps/Chattisgarh.jpg',
+        'Maps/Bihar.jpg',
+        'Maps/Gujrat.jpg',
+        'Maps/odisha.jpg',
+        'Maps/Telegana.jpg'
     ];
 
     function updateMapList() {
