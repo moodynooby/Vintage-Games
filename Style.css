@@ -3,9 +3,18 @@
     width: 3rem;
     height: 3rem;
     margin-right: 5px;
+    border-radius: 50%;
 }
+
+.card-container {  /* This is the container holding all the cards */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Spacing between cards */
+}
+
+
 
 .card {
-width: 25%
+    flex: 1 0 300px; /* Each card takes at least 300px, but can grow */
+    /* Existing card styles */
 }
-
