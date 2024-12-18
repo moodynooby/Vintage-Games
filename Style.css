@@ -8,8 +8,10 @@
 
 .card-container {  /* This is the container holding all the cards */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
-    gap: 20px; /* Spacing between cards */
+    row-gap: 2rem;
+    column-gap: 2rem;
+    grid-auto-flow: column;
+    padding: 10rem;
 }
 
 
