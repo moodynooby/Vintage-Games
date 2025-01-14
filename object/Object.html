@@ -1,28 +1,28 @@
-<html>
+<html lang="en">
 <head>
-    <title>Object Generator</title>
+    <title>Object-Use Game</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="style.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body data-bs-theme="dark">
-<div id="navbar-container"></div>
-<script src="navbar.js"></script>
+    <link href="../style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../assets/5.png">
 
-<div class="container mt-2">
-    <h1 class="mb-5"> Object Generator</h1>
+    <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script></head>
+<body data-theme="synthwave">
+<div class="container " >
+    <h1 class="md-5 text-accent text-5xl py-4">Object-Use Game</h1>
     <div class="row">
         <div class="">
             <div class="card">
                 <div class="card-body">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="userInput" placeholder="Enter atleast 7 unusual uses">
+                        <textarea type="text" class="textarea textarea-primary " id="userInput" placeholder="Enter atleast 7 unusual uses"></textarea>
                     </div>
-                    <ul id="useList"></ul> <div class="text-center mb-3">
+                    <ul id="useList"></ul> <div class="mb-3">
                     <button class="btn btn-primary" onclick="generateObject()">Generate Object</button>
                 </div>
-                    <div id="result" class="text-center fs-4"></div>
+                    <div id="result" class="fs-4"></div>
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@
     column-gap: 2rem;
     grid-auto-flow: column;
     padding: 10rem;
+    height: 50rem;
 }
 
 
@@ -19,4 +20,8 @@
 .card {
     flex: 1 0 300px; /* Each card takes at least 300px, but can grow */
     /* Existing card styles */
+}
+.container{
+    height: 1000vh;
+
 }

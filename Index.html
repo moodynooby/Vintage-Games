@@ -4,27 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Games from Manas suite</title>
-    <link rel="icon" type="image/x-icon" href="src/rubik.png">
+    <link rel="icon" type="image/x-icon" href="assets/rubik.png">
     <link href="style.css" rel="stylesheet">
+    <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script></head>
-<body data-theme="forest">
+
+<body data-theme="dracula">
 
 <div class="dropdown dropdown-end">
-    <div tabindex="0" role="button" class="btn m-1"><img class="icon" src="menu_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" ><img src="src/rubik.png" class="icon">Games From Manas
+    <div tabindex="0" role="button" class="btn m-1"><img class="icon" src="assets/menu_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" ><img src="assets/rubik.png" class="icon">Games From Manas
     </div>
     <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
         <li><a>Map Quiz</a></li>
         <li><a>2048</a></li>
-        <li><a>Object Quiz</a></li>
+        <li><a>Object-Use Game</a></li>
     </ul>
 </div>
-<div class="card-container">
+<div class="card-container ">
 <div class="card bg-base-100 image-full w-96 shadow-xl">
     <figure>
         <img
                 alt="Map"
-                src="/src/3.png"/>
+                src="/assets/3.png"/>
     </figure>
 
 
@@ -32,10 +34,10 @@
         <h2 class="card-title">Map Quiz</h2>
         <p>How Many Indian States Can You Name?</p>
         <b>Game Type:</b> Single-player puzzle game.<br>
-        <b>Original Developer: </b>Original .<br>
-        <b>Objective: </b>Guess the Name of Indian State</p>
+        <b>Original Developer:</b>Original ...<br>
+        <b>Objective: </b>Guess the Name of Indian State
         <div class="card-actions ">
-            <button class="btn btn-primary" src="https://games27.netlify.app/map">Go!</button>
+            <a class="btn btn-primary" href="maps/Map.html" target="_blank">Go!</a>
         </div>
     </div>
 </div>
@@ -43,7 +45,7 @@
     <figure>
         <img
                 alt="icon"
-                src="/src/4.png"/>
+                src="/assets/4.png"/>
     </figure>
 
 
@@ -54,7 +56,7 @@
         <b>Original Developer: </b>Gabriele Cirulli, an Italian web developer.<br>
         <b>Objective: </b>Slide numbered tiles on a grid to combine them and create a tile with the number 2048.</p>
         <div class="card-actions ">
-            <button class="btn btn-primary" src="https://games27.netlify.app/map">Go!</button>
+            <a class="btn btn-primary" href="2048/2048.html" target="_blank">Go!</a>
         </div>
     </div>
 </div>
@@ -62,18 +64,18 @@
     <figure>
         <img
                 alt="icon"
-                src="/src/5.png"/>
+                src="/assets/5.png"/>
     </figure>
 
 
     <div class="card-body">
-        <h2 class="card-title">Object Quiz</h2>
+        <h2 class="card-title">Object-Use Game</h2>
         <p>Can Name 7 Uses For Random Objects?</p>
         <b>Game Type:</b> Single-player puzzle game.<br>
         <b>Original Developer: </b>Original .<br>
-        <b>Objective: </b>Give alteast 7 Uses For The Item Generated</p>
-        <div class="card-actions ">
-            <button class="btn btn-primary" src="https://games27.netlify.app/map">Go!</button>
+        <b>Objective: </b>Give alteast 7 Uses For The Item Generated
+        <div class="card-actions">
+            <a class="btn btn-primary" href="object/Object.html" target="_blank">Go!</a>
         </div>
     </div>
 </div>

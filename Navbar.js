@@ -7,7 +7,7 @@ function createNavbar() {
         // Add other pages here
     ];
 
-    let navbarHtml = '<nav class="navbar navbar-expand-lg bg-body-tertiary "> <div class="container-fluid" >  <ul class="navbar-nav "> <img src="https://www.svgrepo.com/download/475521/arcade.svg" class="icon" >';
+    let navbarHtml = '<nav class="navbar navbar-expand-lg bg-body-tertiary "> <div class="container-fluid" >  <ul class="navbar-nav "> <img assets="https://www.svgrepo.com/download/475521/arcade.svg" class="icon" >';
 
     pages.forEach(page => {
         const isActive = (page.url === currentPage) ? 'active' : '';

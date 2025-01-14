@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Random States Of India Quiz</title>
+    <style>
+        .container {
+          text-align: center;
+            margin: 0px;
+        }
+        #mapImage {
+            max-width: 80rem;
+            max-height: 80rem;
+            margin: 2rem 20rem;
+        }
+        #feedback {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        #mapList {
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+    <link href="../assets/3.png" rel="icon">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../style.css" rel="stylesheet">
+    <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script></head>
+</head>
+<body data-theme="dracula">
+<div class="container">
+    <h1 class="md-5 text-accent text-5xl py-4">Random States Of India Quiz</h1>
+    <textarea class="textarea textarea-bordered textarea-primary" aria-label="State-Name" id="mapInput" placeholder="Note-Please enter in lowercase "  type="text"></textarea><br>
+        <button onclick="checkAndLoadMap()" type="button" class="btn  btn-primary">Enter</button>
+        <button onclick="getRandomImage()" type="button" class="btn btn-secondary ">Get Random Map</button>
+
+
+<!--    <div id="mapList"></div>-->
+    <div id="feedback"></div>
+    <img id="mapImage" src="" alt="Random Map" >
+</div>
+
+<script>
+    const maps = [
+        'arunachal.jpg',
+        'assam.jpg',
+        'haryana.jpg',
+        'jammu and kashmir.jpg',
+        'jharkhand.jpg',
+        'manipur.jpg',
+        'karnataka.jpg',
+        'megalaya.jpg',
+        'mizoram.jpg',
+        'nagaland.jpg',
+        'rajasthan.jpg',
+        'punjab.jpg',
+        'tamilNadu.jpg',
+        'tripura.jpg',
+       'chattisgarh.jpg',
+        'bihar.jpg',
+        'gujarat.jpg',
+        'odisha.jpg',
+        'telegana.jpg'
+    ];
+
+    function updateMapList() {
+        const mapList = document.getElementById('mapList');
+        const availableMaps = maps.map(path => {
+            return path.split('/')[1].replace('.jpg', '');
+        }).join(', ');
+        mapList.textContent = `Available maps: ${availableMaps}`;
+    }
+
+    function getRandomImage() {
+        const randomIndex = Math.floor(Math.random() * maps.length);
+        document.getElementById('mapImage').src = maps[randomIndex];
+        document.getElementById('feedback').textContent = '';
+    }
+
+    function checkAndLoadMap() {
+        const input = document.getElementById('mapInput');
+        const feedback = document.getElementById('feedback');
+        const mapName = input.value;
+        const matchingMap = maps.find(map =>
+            map.toLowerCase().includes(mapName.toLowerCase())
+        );
+
+        if (matchingMap) {
+            document.getElementById('mapImage').src = matchingMap;
+            feedback.textContent = 'Map found and loaded successfully!';
+            feedback.className = 'success';
+        } else {
+            feedback.textContent = 'Map not found. Please enter a valid map name';
+            feedback.className = 'error';
+        }
+        input.value = '';
+    }
+
+    document.getElementById('mapInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkAndLoadMap();
+        }
+    });
+
+    // Initialize
+    window.onload = function() {
+        getRandomImage();
+        updateMapList();
+    };
+</script>
+</body>
+</html>
