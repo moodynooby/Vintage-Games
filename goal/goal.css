@@ -1,0 +1,7 @@
+.list   {
+    display: grid;
+    grid: 2rem / auto auto auto;
+    margin: 2rem;
+    align-items: baseline;
+    column-count: 3;
+}

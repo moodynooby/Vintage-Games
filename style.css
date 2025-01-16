@@ -5,23 +5,85 @@
     margin-right: 5px;
     border-radius: 50%;
 }
-
-.card-container {  /* This is the container holding all the cards */
-    display: grid;
-    row-gap: 2rem;
-    column-gap: 2rem;
-    grid-auto-flow: column;
-    padding: 10rem;
-    height: 50rem;
+.html {
+    font-family: 'Zilla Slab', serif;
 }
 
+.carousel {
+    text-align: center;
 
-
+}
+.container {
+    height: 100%;
+}
 .card {
-    flex: 1 0 300px; /* Each card takes at least 300px, but can grow */
+    flex: 1 0 30%; /* Each card takes at least 300px, but can grow */
     /* Existing card styles */
 }
-.container{
-    height: 1000vh;
 
+
+
+
+
+
+
+
+.zilla-slab-light {
+    font-family: "Zilla Slab", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.zilla-slab-regular {
+    font-family: "Zilla Slab", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.zilla-slab-medium {
+    font-family: "Zilla Slab", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.zilla-slab-semibold {
+    font-family: "Zilla Slab", serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.zilla-slab-bold {
+    font-family: "Zilla Slab", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.zilla-slab-light-italic {
+    font-family: "Zilla Slab", serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.zilla-slab-regular-italic {
+    font-family: "Zilla Slab", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.zilla-slab-medium-italic {
+    font-family: "Zilla Slab", serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.zilla-slab-semibold-italic {
+    font-family: "Zilla Slab", serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.zilla-slab-bold-italic {
+    font-family: "Zilla Slab", serif;
+    font-weight: 700;
+    font-style: italic;
 }
