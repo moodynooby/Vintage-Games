@@ -12,14 +12,19 @@
 .carousel {
     text-align: center;
 
+
 }
 .container {
     height: 100%;
 }
 .card {
     flex: 1 0 30%; /* Each card takes at least 300px, but can grow */
-    /* Existing card styles */
 }
+
+
+
+
+
 
 
 

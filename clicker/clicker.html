@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NES Clicker Game</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/nes.css/2.3.0/css/nes.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!--suppress CssUnusedSymbol -->
+  <style>
+    body {
+      background-color: #202020;
+      color: white;
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .game-container {
+      background-color: #303030;
+      padding: 2rem;
+      border-radius: 4px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .upgrade-container {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .upgrade {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+    }
+
+    .nes-btn {
+      margin: 0.5rem;
+    }
+
+    .disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+<div class="game-container nes-container is-rounded">
+  <h1 class="nes-text is-primary">Pixel Clicker</h1>
+
+  <div class="stats">
+    <div class="nes-container is-rounded">
+      <p>Pixels: <span id="pixels">0</span></p>
+    </div>
+    <div class="nes-container is-rounded">
+      <p>Per Click: <span id="perClick">1</span></p>
+    </div>
+  </div>
+
+  <button id="clickBtn" class="nes-btn is-primary">Click Me!</button>
+
+  <div class="upgrade-container nes-container">
+    <h2 class="nes-text is-success">Upgrades</h2>
+
+    <div class="upgrade nes-container is-rounded">
+      <span>Better Click (Cost: <span id="clickUpgradeCost">10</span>)</span>
+      <button id="clickUpgrade" class="nes-btn is-success">Buy</button>
+    </div>
+
+    <div class="upgrade nes-container is-rounded">
+      <span>Auto Clicker (Cost: <span id="autoClickerCost">50</span>)</span>
+      <button id="autoClicker" class="nes-btn is-warning">Buy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const game = {
+    pixels: 0,
+    perClick: 1,
+    clickUpgradeCost: 10,
+    autoClickerCost: 50,
+    autoClickers: 0,
+
+    init() {
+      this.updateDisplay();
+      this.setupEventListeners();
+      setInterval(() => this.autoClick(), 1000);
+    },
+
+    click() {
+      this.pixels += this.perClick;
+      this.updateDisplay();
+    },
+
+    autoClick() {
+      this.pixels += this.autoClickers;
+      this.updateDisplay();
+    },
+
+    buyClickUpgrade() {
+      if (this.pixels >= this.clickUpgradeCost) {
+        this.pixels -= this.clickUpgradeCost;
+        this.perClick++;
+        this.clickUpgradeCost = Math.floor(this.clickUpgradeCost * 1.5);
+        this.updateDisplay();
+      }
+    },
+
+    buyAutoClicker() {
+      if (this.pixels >= this.autoClickerCost) {
+        this.pixels -= this.autoClickerCost;
+        this.autoClickers++;
+        this.autoClickerCost = Math.floor(this.autoClickerCost * 1.8);
+        this.updateDisplay();
+      }
+    },
+
+    updateDisplay() {
+      document.getElementById('pixels').textContent = Math.floor(this.pixels);
+      document.getElementById('perClick').textContent = this.perClick;
+      document.getElementById('clickUpgradeCost').textContent = this.clickUpgradeCost;
+      document.getElementById('autoClickerCost').textContent = this.autoClickerCost;
+
+      // Update button states
+      document.getElementById('clickUpgrade').classList.toggle('disabled', this.pixels < this.clickUpgradeCost);
+      document.getElementById('autoClicker').classList.toggle('disabled', this.pixels < this.autoClickerCost);
+    },
+
+    setupEventListeners() {
+      document.getElementById('clickBtn').addEventListener('click', () => this.click());
+      document.getElementById('clickUpgrade').addEventListener('click', () => this.buyClickUpgrade());
+      document.getElementById('autoClicker').addEventListener('click', () => this.buyAutoClicker());
+    }
+  };
+
+  game.init();
+</script>
+</body>
+</html>
