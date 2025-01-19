@@ -138,24 +138,24 @@
         'jharkhand.jpg',
         'manipur.jpg',
         'karnataka.jpg',
-        'megalaya.jpg',
+        'meghalaya.jpg',
         'mizoram.jpg',
         'nagaland.jpg',
         'rajasthan.jpg',
         'punjab.jpg',
         'tamilNadu.jpg',
         'tripura.jpg',
-       'chattisgarh.jpg',
+       'chhattisgarh.jpg',
         'bihar.jpg',
         'gujarat.jpg',
         'odisha.jpg',
-        'telegana.jpg'
+        'telangana.jpg'
     ];
 
     function updateMapList() {
         const mapList = document.getElementById('mapList');
         const availableMaps = maps.map(path => {
-            return path.split('/')[1].replace('.jpg', '');
+            return path.split('../maps/')[1].replace('.jpg', '');
         }).join(', ');
         mapList.textContent = `Available maps: ${availableMaps}`;
     }
@@ -176,7 +176,7 @@
 
         if (matchingMap) {
             document.getElementById('mapImage').src = matchingMap;
-            feedback.textContent = 'Map found and loaded successfully!';
+            feedback.textContent = 'Map Correct!';
             feedback.className = 'success';
         } else {
             feedback.textContent = 'Map not found. Please enter a valid map name';
