@@ -1,323 +1,149 @@
-<!doctype html>
-<!--suppress ALL -->
-<html data-bs-theme="dark">
+<!DOCTYPE html>
+<html lang="en" data-theme="synthwave">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Goal Switches</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-  <link href="../assets/goal.png" rel="icon">
-    <link href="goal.css" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet">
-  <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <title>Life Goal Switches</title><meta data-n-head="ssr" charset="utf-8">
-    <meta data-n-head="ssr" name="viewport" content="width=device-width,initial-scale=1"><meta data-n-head="ssr" name="google-site-verification" content="Vyp6Lq2HJODQviN98DbqlmqefoUuDj_cwlmS7jAgaao">
 </head>
-<body class="text-xl">
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const toggles = document.querySelectorAll('.toggle');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const totalToggles = toggles.length;
+<body class="container mx-auto p-4">
+    <div class="text-center mb-6">
+        <h1 class="text-4xl font-bold text-primary">Life Goal Switches</h1>
+    </div>
 
-        function updateProgress() {
-            const activeCount = Array.from(toggles).filter(toggle => toggle.checked).length;
-            const percentage = (activeCount / totalToggles) * 100;
-            progressBar.style.width = `${percentage}%`;
-            progressBar.setAttribute('aria-valuenow', percentage);
-            progressText.textContent = `${activeCount} out of ${totalToggles} items are done`;
-            localStorage.setItem('toggleStatus', JSON.stringify(Array.from(toggles).map(toggle => toggle.checked)));
-        }
+    <div class="w-full bg-base-200 rounded-box mb-6">
+        <div id="progress-bar" class="bg-primary h-2 rounded-box" style="width: 0%"></div>
+    </div>
 
-        toggles.forEach((toggle, index) => {
-            toggle.addEventListener('change', updateProgress);
-        });
+    <div id="goals-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Goals will be dynamically populated here -->
+    </div>
 
-        // Load saved state from localStorage
-        const savedStatus = JSON.parse(localStorage.getItem('toggleStatus'));
-        if (savedStatus) {
-            toggles.forEach((toggle, index) => {
-                toggle.checked = savedStatus[index] || false;
+    <div class="text-center mt-6">
+        <p id="progress-text" class="text-xl font-semibold">0 out of 0 items are done</p>
+    </div>
+
+    <script>
+        const goals = [
+    { emoji: '👶', text: 'Be born' },
+    { emoji: '🚶‍', text: 'Take first steps' },
+    { emoji: '📣', text: 'Say first words' },
+    { emoji: '👨‍🏫', text: 'Learn to read' },
+    { emoji: '🤗', text: 'Make a friend' },
+    { emoji: '🚴‍', text: 'Learn to ride a bike' },
+    { emoji: '📗', text: 'Read a book' },
+    { emoji: '🏊‍', text: 'Learn to swim' },
+    { emoji: '🏫', text: 'Finish elementary school' },
+    { emoji: '⚽', text: 'Play a sport' },
+    { emoji: '🛫', text: 'Fly in a plane' },
+    { emoji: '🛥️', text: 'Ride a boat' },
+    { emoji: '🚆', text: 'Ride in a train' },
+    { emoji: '🚁', text: 'Ride a helicopter' },
+    { emoji: '🌊', text: 'See the ocean' },
+    { emoji: '❄️', text: 'See snow' },
+    { emoji: '☃️', text: 'Make a snowman' },
+    { emoji: '🏫', text: 'Finish middle school' },
+    { emoji: '🎶', text: 'Go to a concert' },
+    { emoji: '🏕️', text: 'Go camping' },
+    { emoji: '🎢', text: 'Ride a rollercoaster' },
+    { emoji: '🎻', text: 'Play an instrument' },
+    { emoji: '💋', text: 'Get kissed' },
+    { emoji: '💳', text: 'Get a credit card' },
+    { emoji: '🚘', text: 'Start driving' },
+    { emoji: '🗺️', text: 'Go on a roadtrip' },
+    { emoji: '🗾', text: 'Visit another country' },
+    { emoji: '🎤', text: 'Give a speech' },
+    { emoji: '🏫', text: 'Graduate high school' },
+    { emoji: '🌐', text: 'Learn another language' },
+    { emoji: '💸', text: 'Invest some money' },
+    { emoji: '📷', text: 'Meet an idol' },
+    { emoji: '😩', text: 'Make a terrible mistake' },
+    { emoji: '🏆', text: 'Win a trophy' },
+    { emoji: '⛰️', text: 'Climb a mountain' },
+    { emoji: '🎽', text: 'Run a marathon' },
+    { emoji: '🍳', text: 'Learn to cook' },
+    { emoji: '🔦', text: 'Explore a cave' },
+    { emoji: '🌋', text: 'See a volcano' },
+    { emoji: '🎓', text: 'Graduate college' },
+    { emoji: '💕', text: 'Have a long relationship' },
+    { emoji: '🗑️', text: 'Get dumped' },
+    { emoji: '🖊️', text: 'Sign a contract' },
+    { emoji: '🏢', text: 'Get a job' },
+    { emoji: '☝️', text: 'Get promoted' },
+    { emoji: '💵', text: 'Get a paycheck' },
+    { emoji: '🔥', text: 'Get fired' },
+    { emoji: '📰', text: 'Get in the news' },
+    { emoji: '🗳️', text: 'Vote in an election' },
+    { emoji: '🤡', text: 'Switch careers' },
+    { emoji: '🏠', text: 'Buy a house' },
+    { emoji: '💍', text: 'Get engaged' },
+    { emoji: '👰', text: 'Get married' },
+    { emoji: '👶', text: 'Have a kid' },
+    { emoji: '🚶‍', text: 'Teach your kid to walk' },
+    { emoji: '📣', text: 'Teach your kid to talk' },
+    { emoji: '🎓', text: 'Watch your kid graduate' },
+    { emoji: '👰', text: 'Watch your kid get married' },
+    { emoji: '👴', text: 'Become a grandparent' },
+    { emoji: '🏖️', text: 'Retire' },
+    { emoji: '📔', text: 'Tell your grand kid a story' },
+    { emoji: '🌑', text: 'See a solar eclipse' },
+    { emoji: '🌷', text: 'Plant a garden' },
+    { emoji: '🌎', text: 'Travel the world' },
+    { emoji: '🎂', text: 'Turn 100' },
+    { emoji: '✔️', text: 'Complete Life Checklist' }
+];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const goalsContainer = document.getElementById('goals-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            // Populate goals
+            goals.forEach((goal, index) => {
+                const goalElement = document.createElement('div');
+                goalElement.innerHTML = `
+                    <div class="form-control">
+                        <label class="label cursor-pointer bg-base-100 rounded-box p-4 flex items-center">
+                            <span class="label-text text-xl mr-4">${goal.emoji} ${goal.text}</span>
+                            <input type="checkbox" class="toggle toggle-primary goal-toggle" data-index="${index}">
+                        </label>
+                    </div>
+                `;
+                goalsContainer.appendChild(goalElement);
             });
+
+            const toggles = document.querySelectorAll('.goal-toggle');
+            const totalToggles = toggles.length;
+
+            function updateProgress() {
+                const activeToggles = Array.from(toggles).filter(toggle => toggle.checked);
+                const percentage = (activeToggles.length / totalToggles) * 100;
+                
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${activeToggles.length} out of ${totalToggles} items are done`;
+
+                // Save toggle states to localStorage
+                const savedStates = Array.from(toggles).map(toggle => toggle.checked);
+                localStorage.setItem('lifeGoalToggles', JSON.stringify(savedStates));
+            }
+
+            // Load saved states from localStorage
+            const savedStates = JSON.parse(localStorage.getItem('lifeGoalToggles'));
+            if (savedStates) {
+                toggles.forEach((toggle, index) => {
+                    toggle.checked = savedStates[index] || false;
+                });
+            }
+
+            // Add event listeners to toggles
+            toggles.forEach(toggle => {
+                toggle.addEventListener('change', updateProgress);
+            });
+
+            // Initial progress update
             updateProgress();
-        }
-    });
-</script>
-
-<h1 class="text-primary text-5xl text-center">Life Goal Switches</h1>
-<div class="progress mb-3">
-    <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-
-<div class="list mt-3">
-
-<div class="form-check form-switch">
-    <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👶 Be born
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚶‍ Take first steps
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📣 Say first words
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👨‍🏫 Learn to read
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🤗 Make a friend
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚴‍ Learn to ride a bike
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📗 Read a book
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏊‍ Learn to swim
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏫 Finish elementary school
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ⚽ Play a sport
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🛫 Fly in a plane
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🛥️ Ride a boat
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚆 Ride in a train
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚁 Ride a helicopter
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌊 See the ocean
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ❄️ See snow
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ☃️ Make a snowman
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏫 Finish middle school
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎶 Go to a concert
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏕️ Go camping
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎢 Ride a rollercoaster
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎻 Play an instrument
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💋 Get kissed
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💳 Get a credit card
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚘 Start driving
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🗺️ Go on a roadtrip
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🗾 Visit another country
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎤 Give a speech
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏫 Graduate high school
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌐 Learn another language
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💸 Invest some money
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📷 Meet an idol
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    😩 Make a terrible mistake
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏆 Win a trophy
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ⛰️ Climb a mountain
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎽 Run a marathon
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🍳 Learn to cook
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🔦 Explore a cave
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌋 See a volcano
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎓 Graduate college
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💕 Have a long relationship
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🗑️ Get dumped
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🖊️ Sign a contract
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏢 Get a job
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ☝️ Get promoted
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💵 Get a paycheck
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🔥 Get fired
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📰 Get in the news
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🗳️ Vote in an election
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🤡 Switch careers
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏠 Buy a house
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    💍 Get engaged
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👰 Get married
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👶 Have a kid
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🚶‍ Teach your kid to walk
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📣 Teach your kid to talk
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎓 Watch your kid graduate
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👰 Watch your kid get married
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    👴 Become a grandparent
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🏖️ Retire
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    📔 Tell your grand kid a story
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌑 See a solar eclipse
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌷 Plant a garden
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🌎 Travel the world
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    🎂 Turn 100
-</label></div><div class="form-check form-switch">
-  <input class="toggle me-2 form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    ✔️ Complete Life Checklist
-</label></div>
-</div>
-<p id="progress-text" class="text-bold text-center">0 out of 0 items are done</p>
+        });
+    </script>
 </body>
 </html>
