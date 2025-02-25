@@ -1,116 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <title>Random States Of India Quiz</title>
-    <style>
-        .container {
-          text-align: center;
-            margin: 0;
-        }
-        #mapImage {
-            max-width: 80rem;
-            max-height: 80rem;
-            margin: 2rem 20rem;
-        }
-        #feedback {
-            margin: 10px 0;
-            font-weight: bold;
-        }
-        #mapList {
-            margin: 10px 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
-    <link href="../assets/map.png" rel="icon">
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../style.css" rel="stylesheet">
-    <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script></head>
+    <link href="../assets/map.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .game-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            aspect-ratio: 1;
+        }
+
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .feedback {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.success {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+        }
+
+        .feedback.error {
+            background: rgba(245, 101, 101, 0.2);
+            color: #f56565;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .map-container {
+                max-width: 100%;
+            }
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
 <body data-theme="synthwave">
-<div class="container">
+    <div class="game-container">
+        <h1 class="text-accent text-5xl py-4 text-center">Random States Of India Quiz</h1>
+        
+        <div class="controls">
+            <textarea 
+                class="textarea textarea-primary w-full" 
+                id="mapInput" 
+                placeholder="Enter state name (in lowercase)"
+                rows="2"
+            ></textarea>
+            
+            <div class="flex gap-4 w-full">
+                <button onclick="game.checkAnswer()" class="btn btn-primary flex-1">
+                    Check Answer
+                </button>
+                <button onclick="game.getRandomState()" class="btn btn-secondary flex-1">
+                    New State
+                </button>
+            </div>
+        </div>
 
-    <h1 class="md-5 text-accent text-5xl py-4">Random States Of India Quiz</h1>
-    <textarea class="textarea textarea-bordered textarea-primary" aria-label="State-Name" id="mapInput" placeholder="Note-Please enter in lowercase "  type="text"></textarea><br>
-        <button onclick="checkAndLoadMap()" type="button" class="btn  btn-primary">Enter</button>
-        <button onclick="getRandomImage()" type="button" class="btn btn-secondary ">Get Random Map</button>
+        <div id="feedback" class="feedback hidden"></div>
+        
+        <div class="map-container">
+            <img id="mapImage" class="map-image" src="" alt="State Map">
+        </div>
 
+        <div class="mt-4">
+            <span class="text-lg">Score: <span id="score">0</span></span>
+        </div>
+    </div>
 
-<!--    <div id="mapList"></div>-->
-    <div id="feedback"></div>
-    <img id="mapImage" src="" alt="Random Map" >
-</div>
+    <script>
+        class StateQuiz {
+            constructor() {
+                this.states = [
+                    'arunachal pradesh', 'assam', 'haryana', 'jammu_and_kashmir',
+                    'jharkhand', 'manipur', 'karnataka', 'meghalaya', 'mizoram',
+                    'nagaland', 'rajasthan', 'punjab', 'tamil_nadu', 'tripura',
+                    'chhattisgarh', 'bihar', 'gujarat', 'odisha', 'telangana'
+                ];
+                
+                this.currentState = '';
+                this.score = 0;
+                this.setupEventListeners();
+                this.loadHighScore();
+            }
 
-<script>
-    const maps = [
-        'arunachal.jpg',
-        'assam.jpg',
-        'haryana.jpg',
-        'jammu and kashmir.jpg',
-        'jharkhand.jpg',
-        'manipur.jpg',
-        'karnataka.jpg',
-        'meghalaya.jpg',
-        'mizoram.jpg',
-        'nagaland.jpg',
-        'rajasthan.jpg',
-        'punjab.jpg',
-        'tamilNadu.jpg',
-        'tripura.jpg',
-       'chhattisgarh.jpg',
-        'bihar.jpg',
-        'gujarat.jpg',
-        'odisha.jpg',
-        'telangana.jpg'
-    ];
+            setupEventListeners() {
+                document.getElementById('mapInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.checkAnswer();
+                    }
+                });
+            }
 
-    function updateMapList() {
-        const mapList = document.getElementById('mapList');
-        const availableMaps = maps.map(path => {
-            return path.split('../maps/')[1].replace('.jpg', '');
-        }).join(', ');
-        mapList.textContent = `Available maps: ${availableMaps}`;
-    }
+            getRandomState() {
+                const index = Math.floor(Math.random() * this.states.length);
+                this.currentState = this.states[index];
+                const imagePath = `${this.currentState.replace(' ', '')}.jpg`;
+                document.getElementById('mapImage').src = imagePath;
+                document.getElementById('mapInput').value = '';
+                this.hideFeedback();
+            }
 
-    function getRandomImage() {
-        const randomIndex = Math.floor(Math.random() * maps.length);
-        document.getElementById('mapImage').src = maps[randomIndex];
-        document.getElementById('feedback').textContent = '';
-    }
+            checkAnswer() {
+                const input = document.getElementById('mapInput').value.toLowerCase().trim();
+                const feedback = document.getElementById('feedback');
+                
+                if (input === this.currentState) {
+                    this.showFeedback('Correct! Well done!', 'success');
+                    this.updateScore(1);
+                    setTimeout(() => this.getRandomState(), 1500);
+                } else {
+                    this.showFeedback('Try again!', 'error');
+                    this.updateScore(-1);
+                }
+                
+                document.getElementById('mapInput').value = '';
+            }
 
-    function checkAndLoadMap() {
-        const input = document.getElementById('mapInput');
-        const feedback = document.getElementById('feedback');
-        const mapName = input.value;
-        const matchingMap = maps.find(map =>
-            map.toLowerCase().includes(mapName.toLowerCase())
-        );
+            showFeedback(message, type) {
+                const feedback = document.getElementById('feedback');
+                feedback.textContent = message;
+                feedback.className = `feedback ${type}`;
+                feedback.classList.remove('hidden');
+            }
 
-        if (matchingMap) {
-            document.getElementById('mapImage').src = matchingMap;
-            feedback.textContent = 'Map Correct!';
-            feedback.className = 'success';
-        } else {
-            feedback.textContent = 'Map not found. Please enter a valid map name';
-            feedback.className = 'error';
+            hideFeedback() {
+                document.getElementById('feedback').classList.add('hidden');
+            }
+
+            updateScore(points) {
+                this.score += points;
+                this.score = Math.max(0, this.score);
+                document.getElementById('score').textContent = this.score;
+                
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                    localStorage.setItem('mapQuizHighScore', this.score);
+                }
+            }
+
+            loadHighScore() {
+                this.highScore = parseInt(localStorage.getItem('mapQuizHighScore')) || 0;
+            }
         }
-        input.value = '';
-    }
 
-    document.getElementById('mapInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            checkAndLoadMap();
-        }
-    });
-
-    // Initialize
-    window.onload = function() {
-        getRandomImage();
-        updateMapList();
-    };
-</script>
+        const game = new StateQuiz();
+        game.getRandomState();
+    </script>
 </body>
 </html>

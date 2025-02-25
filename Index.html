@@ -1,119 +1,140 @@
-<!doctype html>
-<!--suppress ALL -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Games from Manas suite</title>
+    <title>Games Pack from Manas suite</title>
     <link rel="icon" type="image/x-icon" href="assets/rubik.png">
     <link href="style.css" rel="stylesheet">
-    <link href=" https://unpkg.com/nes.css@2.3.0/css/nes.min.css " rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script></head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .game-carousel {
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            max-lines: 100%;
+            
+        }
+        
+        .game-card {
+            scroll-snap-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: scale(1.02);
+        }
 
-<body data-theme="synthwave">
-<div class="container">
-<div  class="carousel w-full">
-    <div class="carousel carousel-center p-4 space-x-4 bg-neutral rounded-box ">
-        <h1 class="md-5 text-accent text-5xl py-4">Game Pack</h1>
+        .game-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
 
-        <div class="card carousel-item bg-base-100 image-full w-96 shadow-xl">
-            <figure>
-                <img
-                        alt="Map"
-                        src="/assets/map.png"/>
-            </figure>
+        .card-actions {
+            margin-top: auto;
+        }
 
+        .beta-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
 
-            <div class="card-body">
-                <h2 class="card-title">Map Quiz</h2>
-                <p>How Many Indian States Can You Name?</p>
-                <b>Game Type:</b> Single-player puzzle game.<br>
-                <b>Original Developer:</b>Original ...<br>
-                <b>Objective: </b>Guess the Name of Indian State
-                <div class="card-actions ">
-                    <a class="btn btn-primary" href="maps/Map.html" target="_blank">Go!</a>
+<body data-theme="dark" class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="carousel w-full">
+            <div class="game-carousel carousel-center p-4 space-x-6 bg-neutral rounded-box">
+                <h1 class="text-accent text-5xl py-4 font-bold">Game Pack</h1>
+
+                <div class="game-card card carousel-item bg-base-100 image-full w-96 shadow-xl">
+                    <figure>
+                        <img class="game-image" alt="Map" src="assets/map.png"/>
+                    </figure>
+                    <div class="card-body flex flex-col">
+                        <h2 class="card-title text-2xl">Map Quiz</h2>
+                        <p class="text-lg">How Many Indian States Can You Name?</p>
+                        <div class="mt-4">
+                            <p><b>Game Type:</b> Single-player puzzle game</p>
+                            <p><b>Original Developer:</b> Original</p>
+                            <p><b>Objective:</b> Guess the Name of Indian State</p>
+                        </div>
+                        <div class="card-actions mt-auto">
+                            <a class="btn btn-primary btn-block" href="maps/Map.html">Play Now!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card card carousel-item bg-base-100 image-full w-96 shadow-xl">
+                    <figure>
+                        <img class="game-image" alt="2048" src="assets/2048.png"/>
+                    </figure>
+                    <div class="card-body flex flex-col">
+                        <h2 class="card-title text-2xl">2048</h2>
+                        <p class="text-lg">Can You Reach 2048?</p>
+                        <div class="mt-4">
+                            <p><b>Game Type:</b> Single-player sliding tile puzzle game</p>
+                            <p><b>Original Developer:</b> Gabriele Cirulli</p>
+                            <p><b>Objective:</b> Combine tiles to create 2048</p>
+                        </div>
+                        <div class="card-actions mt-auto">
+                            <a class="btn btn-primary btn-block" href="2048/2048.html">Play Now!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card card carousel-item bg-base-100 image-full w-96 shadow-xl">
+                    <figure>
+                        <img class="game-image" alt="Object Use" src="assets/object.png"/>
+                    </figure>
+                    <div class="card-body flex flex-col">
+                        <h2 class="card-title text-2xl">Object-Use Game</h2>
+                        <p class="text-lg">Can Name 7 Uses For Random Objects?</p>
+                        <div class="mt-4">
+                            <p><b>Game Type:</b> Single-player puzzle game</p>
+                            <p><b>Original Developer:</b> Original</p>
+                            <p><b>Objective:</b> List 7 uses for random items</p>
+                        </div>
+                        <div class="card-actions mt-auto">
+                            <a class="btn btn-primary btn-block" href="object/Object.html">Play Now!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card card carousel-item bg-base-100 image-full w-96 shadow-xl">
+                    <figure>
+                        <img class="game-image" alt="Life Goals" src="assets/goal.png"/>
+                    </figure>
+                    <div class="card-body flex flex-col">
+                        <h2 class="card-title text-2xl">Life Goal Switches</h2>
+                        <p class="text-lg">Track Your Life Goals</p>
+                        <div class="mt-4">
+                            <p><b>Game Type:</b> Single-player game</p>
+                            <p><b>Original Developer:</b> Neal.fun</p>
+                            <p><b>Objective:</b> Mark completed life goals</p>
+                        </div>
+                        <div class="card-actions mt-auto">
+                            <a class="btn btn-primary btn-block" href="goal/goal.html">Play Now!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card card carousel-item bg-base-100 image-full w-96 shadow-xl">
+                    <div class="card-body flex flex-col">
+                        <h2 class="card-title text-2xl">Beta Games</h2>
+                        <p class="text-lg">Try our newest games in development</p>
+                        <div class="beta-section mt-4">
+                            <a class="btn btn-secondary flex-1" href="clicker/clicker.html">Clicker Game</a>
+                            <a class="btn btn-secondary flex-1" href="#">Auction Game</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card carousel-item bg-base-100 image-full w-96 shadow-xl">
-            <figure>
-                <img
-                        alt="icon"
-                        src="/assets/2048.png"/>
-            </figure>
-
-
-            <div class="card-body">
-                <h2 class="card-title">2048</h2>
-                <p>Can You Reach 2048?</p>
-                <b>Game Type:</b> Single-player sliding tile puzzle game.<br>
-                <b>Original Developer: </b>Gabriele Cirulli, an Italian web developer.<br>
-                <b>Objective: </b>Slide numbered tiles on a grid to combine them and create a tile with the number 2048.
-                <div class="card-actions ">
-                    <a class="btn btn-primary" href="2048/2048.html" target="_blank">Go!</a>
-                </div>
-            </div>
-        </div>
-        <div class="card carousel-item bg-base-100 image-full w-96 shadow-xl">
-            <figure>
-                <img
-                        alt="icon"
-                        src="/assets/object.png"/>
-            </figure>
-
-
-            <div class="card-body">
-                <h2 class="card-title">Object-Use Game</h2>
-                <p>Can Name 7 Uses For Random Objects?</p>
-                <b>Game Type:</b> Single-player puzzle game.<br>
-                <b>Original Developer: </b>Original .<br>
-                <b>Objective: </b>Give at-least 7 Uses For The Item Generated
-                <div class="card-actions">
-                    <a class="btn btn-primary" href="object/Object.html" target="_blank">Go!</a>
-                </div>
-            </div>
-        </div>
-        <div class="card carousel-item bg-base-100 image-full w-96 shadow-xl">
-            <figure>
-                <img
-                        alt="icon"
-                        src="/assets/goal.png"/>
-            </figure>
-
-
-            <div class="card-body">
-                <h2 class="card-title">Life Goal Switches</h2>
-                <p>How Many Goals Have You Completer?</p>
-                <b>Game Type:</b> Single-player game.<br>
-                <b>Original Developer:</b>Neal.fun ...<br>
-                <b>Objective: </b>Select The life Goals Done
-                <div class="card-actions ">
-                    <a class="btn btn-primary" href="goal/goal.html" target="_blank">Go!</a>
-                </div>
-            </div>
-        </div>
-        <div class="card carousel-item bg-base-100 image-full w-96 shadow-xl">
-            <figure>
-            </figure>
-
-
-            <div class="card-body">
-                <h2 class="card-title">Beta Games</h2>
-<!--                <p>How Many Goals Have You Completer?</p>-->
-<!--                <b>Game Type:</b> Single-player game.<br>-->
-<!--                <b>Original Developer:</b>Neal.fun ...<br>-->
-<!--                <b>Objective: </b>Select The life Goals Done-->
-                <div class="card-actions ">
-                    <a class="btn btn-link" href="clicker/clicker.html" target="_blank">Clicker Game</a>
-                    <a class="btn btn-link" href="" target="_blank">Auction Game</a>
-
-                </div>
-            </div>
-        </div>
-
     </div>
-</div>
-</div>
 </body>
 </html>
