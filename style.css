@@ -1,34 +1,48 @@
-.icon
-{
-    width: 3rem;
-    height: 3rem;
-    margin-right: 5px;
-    border-radius: 50%;
-}
+
 .html {
     font-family: 'Zilla Slab', serif;
 }
 
-.carousel {
-    text-align: center;
 
-
-}
 .container {
+    width: 99%;
+    height: 99%;
+    display: flow;
+    border-radius: 30px;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    padding: 30px;
+    text-align: center;
+    column-count: 2;
+}
+
+
+.game-card {
+    width: 500px;
     height: 100%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    padding: 2px;
+    border: 5px var(--pc);
+    border-radius: 20px;
 }
-.card {
-    flex: 1 0 30%; /* Each card takes at least 300px, but can grow */
+
+.game-image {
+    width: 100%;
+    height: 200%;
 }
 
 
+.icon
+{
+    width: 4rem;
+    height: 4rem;
+    margin-right: 5px;
+}
 
-
-
-
-
-
-
+.btn-primary {
+    margin-top: 10px;
+}
 
 
 
